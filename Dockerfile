@@ -2,12 +2,16 @@ FROM ubuntu
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update                          && \
+COPY sources.list /etc/apt/
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get dist-upgrade -y && \
+    apt-get -f install -y && \ 
     apt-get install -y build-essential   \
                        cmake             \
                        git               \
                        python-dev        \
-                       silversearcher-ag \
                        vim               \
                        wget                 && \
     rm -rf /var/lib/apt/lists
@@ -18,8 +22,12 @@ COPY .vimrc /root/
 RUN vim +PluginInstall +qall
  
 
-RUN	cd $HOME/.vim/bundle/YouCompleteMe &&\
-    git submodule update --init --recursive &&\
-    ./install.sh --clang-completer
+RUN cd $HOME/.vim/bundle/YouCompleteMe && \
+    git submodule update --init --recursive && \
+    python ./install.py --clang-completer 
+
+Run apt-get install -y python-pip && \
+    pip install --upgrade tensorflow && \
+                          glob2
 
 

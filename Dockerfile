@@ -11,6 +11,7 @@ RUN apt-get update && \
     apt-get install -y build-essential   \
                        cmake             \
                        git               \
+                       python-pip        \
                        python-dev        \
                        vim               \
                        wget                 && \
@@ -26,8 +27,9 @@ RUN cd $HOME/.vim/bundle/YouCompleteMe && \
     git submodule update --init --recursive && \
     python ./install.py --clang-completer 
 
-Run apt-get install -y python-pip && \
-    pip install --upgrade tensorflow && \
-                          glob2
+
+Run pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple && \
+    tensorflow && \
+    glob2 
 
 

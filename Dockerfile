@@ -4,11 +4,14 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN mkdir -p ~/.pip &&\
     mkdir -p ~/workspace
+    mkdir -p ~/.vim/colors
 
 COPY sources.list /etc/apt/
 COPY .vimrc /root/
 COPY pip.conf /root/.pip
+COPY solarized.vim /root/.vim/colors
 
+RUN export TERM=xterm-256color 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get dist-upgrade -y && \
@@ -26,7 +29,6 @@ RUN apt-get update && \
 
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 
 RUN vim +PluginInstall +qall
- 
 
 RUN cd $HOME/.vim/bundle/YouCompleteMe && \
     git submodule update --init --recursive && \

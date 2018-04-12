@@ -44,7 +44,8 @@ RUN echo "dash dash/sh boolean false" | debconf-set-selections
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
 
 RUN apt-get install -y software-properties-common
-RUN apt-get update && \
+RUN add-apt-repository ppa:jonathonf/vim && \
+    apt-get update && \
     apt-get install -y vim
 
 

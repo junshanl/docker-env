@@ -6,7 +6,7 @@ RUN  mkdir -p ~/.vim/autoload  && \
 RUN git clone https://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
 
 RUN git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-RUN git clone https://github.com/Lokaltog/vim-powerline ~/.vim/bundle/powerline
+RUN git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
 RUN git clone https://github.com/vim-scripts/indentpython.vim ~/.vim/bundle/identpython
 RUN git clone https://github.com/Yggdroot/indentLine ~/.vim/bundle/indentLine
 RUN pip install autopep8 && \
@@ -14,12 +14,11 @@ RUN pip install autopep8 && \
 RUN git clone https://github.com/vim-syntastic/syntastic ~/.vim/bundle/syntastic
 
 RUN mkdir /root/.pip
+
+
+RUN pip install --upgrade pip
+RUN pip install flake8
 COPY pip.conf /root/.pip
-
-RUN pip install --upgrade pip && \
-    pip install flake8
-#RUN apt-get install ctags
-
 
 RUN pip install tensorflow && \
     pip install glob2 && \
@@ -28,7 +27,25 @@ RUN pip install tensorflow && \
     pip install scipy && \
     pip install tqdm && \
     pip install pandas &&\
-    pip install pyxdg
+    pip install pyxdg 
+    
+RUN pip install librosa
+
+RUN git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp 
+RUN apt-get install silversearcher-ag && \ 
+    git clone https://github.com/rking/ag.vim.git ~/.vim/bundle/ag
+
+RUN apt-get install -y ffmpeg
+RUN apt-get install -y vim-gtk
+Run git clone https://github.com/skywind3000/asyncrun.vim ~/.vim/bundle/asyncrun
+
+# make /bin/sh symlink to bash instead of dash:
+RUN echo "dash dash/sh boolean false" | debconf-set-selections
+RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
+
+RUN apt-get install -y software-properties-common
+RUN apt-get update && \
+    apt-get install -y vim
 
 
 COPY .vimrc /root/

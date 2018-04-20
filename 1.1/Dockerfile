@@ -35,7 +35,8 @@ RUN git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp
 RUN apt-get install silversearcher-ag && \ 
     git clone https://github.com/rking/ag.vim.git ~/.vim/bundle/ag
 
-RUN apt-get install -y ffmpeg
+RUN apt-get update && \
+    apt-get install -y ffmpeg
 RUN apt-get install -y vim-gtk
 Run git clone https://github.com/skywind3000/asyncrun.vim ~/.vim/bundle/asyncrun
 
@@ -48,5 +49,6 @@ RUN add-apt-repository ppa:jonathonf/vim && \
     apt-get update && \
     apt-get install -y vim
 
+RUN git clone https://github.com/vim-scripts/Super-Shell-Indent ~/.vim/bundle/Super-Shell-Indent
 
 COPY .vimrc /root/
